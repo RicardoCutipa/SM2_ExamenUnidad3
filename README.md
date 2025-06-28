@@ -26,28 +26,17 @@ A continuación, se presentan las capturas de pantalla que documentan la impleme
 
 La siguiente imagen muestra la estructura de directorios requerida (`.github/workflows/`) creada en la raíz del repositorio para alojar el archivo de configuración del workflow.
 
-**[PEGA AQUÍ TU CAPTURA DE PANTALLA DE LA ESTRUCTURA DE CARPETAS]**
-
-*Ejemplo de cómo se vería el enlace una vez que subas tu imagen:*
-`![Estructura de Carpetas](https://raw.githubusercontent.com/RicardoCutipa/SM2_ExamenUnidad3/main/docs/estructura.png)`
+![Estructura de Carpetas](./capturas/captura1.png)
 
 ### 3.2. Contenido del Archivo `quality-check.yml`
 
 El archivo `quality-check.yml` define los pasos que GitHub Actions ejecuta automáticamente. Este workflow se activa en cada `push` o `pull_request` a la rama `main` y realiza análisis de calidad y pruebas unitarias sobre el código Flutter.
 
-**[PEGA AQUÍ TU CAPTURA DE PANTALLA DEL CÓDIGO YML]**
-
-*Ejemplo de cómo se vería el enlace una vez que subas tu imagen:*
-`![Contenido del Workflow](https://raw.githubusercontent.com/RicardoCutipa/SM2_ExamenUnidad3/main/docs/workflow.png)`
+![Contenido del Workflow](./capturas/captura2.png)
 
 ### 3.3. Ejecución Exitosa del Workflow en "Actions"
 
 La captura de pantalla a continuación evidencia la ejecución exitosa (100% Passed) del workflow "Quality Check" en la pestaña "Actions" del repositorio. Se puede observar que todos los pasos, incluyendo `analyze` y `test`, se completaron sin errores.
-
-**[PEGA AQUÍ TU CAPTURA DE PANTALLA DE LA EJECUCIÓN EN ACTIONS]**
-
-*Ejemplo de cómo se vería el enlace una vez que subas tu imagen:*
-`![Ejecución Exitosa del Workflow](https://raw.githubusercontent.com/RicardoCutipa/SM2_ExamenUnidad3/main/docs/actions.png)`
 
 ---
 
