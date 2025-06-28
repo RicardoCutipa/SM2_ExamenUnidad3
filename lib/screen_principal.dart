@@ -7,10 +7,10 @@ import 'services/custom_heatmap.dart';
 import 'services/location_service.dart';
 import 'services/auth_service.dart';
 import 'widgets/barralateral.dart';
-import 'widgets/LeyendaMapa.dart';
+import 'widgets/leyenda_mapa.dart';
 import 'widgets/alternar_boton.dart';
-import 'widgets/botonEmergencia.dart';
-import 'screenRutaSegura.dart';
+import 'widgets/boton_emergencia.dart';
+import 'screen_ruta_segura.dart';
 
 class ScreenPrincipal extends StatefulWidget {
   const ScreenPrincipal({super.key});

@@ -21,7 +21,6 @@ class _BarraLateralState extends State<BarraLateral> with TickerProviderStateMix
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
-  // Paleta de colores azul
   static const Color primaryBlue = Color(0xFF1565C0);
   static const Color lightBlue = Color(0xFF42A5F5);
   static const Color darkBlue = Color(0xFF0D47A1);
@@ -75,7 +74,7 @@ class _BarraLateralState extends State<BarraLateral> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -84,7 +83,7 @@ class _BarraLateralState extends State<BarraLateral> with TickerProviderStateMix
               primaryBlue,
               lightBlue,
             ],
-            stops: const [0.0, 0.4, 1.0],
+            stops: [0.0, 0.4, 1.0],
           ),
         ),
         child: FadeTransition(
@@ -126,7 +125,7 @@ class _BarraLateralState extends State<BarraLateral> with TickerProviderStateMix
         border: Border.all(color: Colors.white, width: 3),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withAlpha(51),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -158,24 +157,18 @@ class _BarraLateralState extends State<BarraLateral> with TickerProviderStateMix
                  _userData?['nombre'] ?? 
                  'Usuario';
     
-    // Limpiar el nombre y dividir en palabras no vacías
     final words = name.trim().split(' ').where((String word) => word.isNotEmpty).toList();
     
     if (words.length >= 2) {
-      // Si hay al menos 2 palabras, tomar la primera letra de cada una
       return '${words[0][0]}${words[1][0]}'.toUpperCase();
     } else if (words.isNotEmpty) {
-      // Si hay solo una palabra
       final firstWord = words[0];
       if (firstWord.length >= 2) {
-        // Si la palabra tiene 2 o más caracteres, tomar los primeros 2
         return firstWord.substring(0, 2).toUpperCase();
       } else if (firstWord.isNotEmpty) {
-        // Si la palabra tiene solo 1 carácter
         return firstWord[0].toUpperCase();
       }
     }
-    // Fallback si todo falla
     return 'U';
   }
 
@@ -243,11 +236,11 @@ class _BarraLateralState extends State<BarraLateral> with TickerProviderStateMix
             style: TextStyle(fontWeight: FontWeight.w500),
           ),
           onTap: () {
-            Navigator.pop(context); // Cierra el drawer
+            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const NoticiasScreen(), // Navega a la pantalla de noticias
+                builder: (context) => const NoticiasScreen(),
               ),
             );
           },

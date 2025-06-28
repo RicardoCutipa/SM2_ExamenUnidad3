@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../models/noticia_model.dart';
-import 'package:url_launcher/url_launcher.dart'; // <-- IMPORTAR PAQUETE
+import 'package:url_launcher/url_launcher.dart';
 
 class NoticiaDetalleScreen extends StatelessWidget {
   final Noticia noticia;
 
   const NoticiaDetalleScreen({super.key, required this.noticia});
 
-  // Función para abrir el enlace en un navegador
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri)) {
@@ -26,9 +25,8 @@ class NoticiaDetalleScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Imagen de la noticia
             Image.network(
-              noticia.imagen_url,
+              noticia.imagenUrl,
               width: double.infinity,
               height: 250,
               fit: BoxFit.cover,
@@ -40,16 +38,14 @@ class NoticiaDetalleScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // --- SECCIÓN DE METADATOS ---
-                  Wrap( // Wrap es genial para que los elementos se ajusten
-                    spacing: 8.0, // Espacio horizontal entre chips
-                    runSpacing: 4.0, // Espacio vertical si se van a una nueva línea
+                  Wrap(
+                    spacing: 8.0,
+                    runSpacing: 4.0,
                     children: [
                       Chip(
                         avatar: Icon(Icons.category_outlined, color: Colors.indigo[800]),
@@ -64,8 +60,6 @@ class NoticiaDetalleScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  
-                  // Título grande
                   Text(
                     noticia.titulo,
                     style: const TextStyle(
@@ -75,15 +69,10 @@ class NoticiaDetalleScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-
-                  // --- INFORMACIÓN DETALLADA ---
                   _buildDetailRow(Icons.access_time_outlined, '${noticia.fecha} - ${noticia.hora}'),
                   const SizedBox(height: 8),
                   _buildDetailRow(Icons.location_on_outlined, noticia.lugar),
-                  
                   const Divider(height: 32, thickness: 1),
-
-                  // Resumen
                   const Text(
                     'Resumen',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -93,10 +82,7 @@ class NoticiaDetalleScreen extends StatelessWidget {
                     noticia.resumen,
                     style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: Colors.black54),
                   ),
-                  
                   const SizedBox(height: 24),
-                  
-                  // Contenido completo
                   const Text(
                     'Contenido Completo',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -111,8 +97,6 @@ class NoticiaDetalleScreen extends StatelessWidget {
                     ),
                   ),
                   const Divider(height: 32, thickness: 1),
-
-                  // --- ENLACE A LA FUENTE ORIGINAL ---
                   ListTile(
                     leading: const Icon(Icons.link, color: Colors.blue),
                     title: const Text(
@@ -132,7 +116,6 @@ class NoticiaDetalleScreen extends StatelessWidget {
     );
   }
 
-  // Widget auxiliar para no repetir código
   Widget _buildDetailRow(IconData icon, String text) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

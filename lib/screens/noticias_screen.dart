@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // <-- 1. Importar Firestore
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/noticia_model.dart';
 import 'noticia_detalle_screen.dart';
 
-// 2. Convertir a StatefulWidget para manejar el estado de carga y los datos
 class NoticiasScreen extends StatefulWidget {
   const NoticiasScreen({super.key});
 
@@ -12,32 +11,28 @@ class NoticiasScreen extends StatefulWidget {
 }
 
 class _NoticiasScreenState extends State<NoticiasScreen> {
-  // 3. Variables para manejar el estado
   bool _isLoading = true;
   List<Noticia> _noticias = [];
 
   @override
   void initState() {
     super.initState();
-    _cargarNoticias(); // 4. Cargar las noticias cuando la pantalla se inicie
+    _cargarNoticias();
   }
 
-  // 5. Método para obtener los datos de Firestore (similar a tu _fetchAllReportPoints)
   Future<void> _cargarNoticias() async {
     try {
-      // Ordenamos por 'timestamp_creacion' para ver las más nuevas primero
       QuerySnapshot noticiasSnapshot = await FirebaseFirestore.instance
           .collection('Noticias')
           .orderBy('timestamp_creacion', descending: true)
-          .limit(20) // limitar a 20 noticias maximo
+          .limit(20)
           .get();
 
-      // Convertimos cada documento en un objeto Noticia usando nuestro factory
       final noticiasData = noticiasSnapshot.docs
           .map((doc) => Noticia.fromFirestore(doc))
           .toList();
       
-      if (mounted) { // Importante verificar si el widget sigue en pantalla
+      if (mounted) {
         setState(() {
           _noticias = noticiasData;
           _isLoading = false;
@@ -63,15 +58,13 @@ class _NoticiasScreenState extends State<NoticiasScreen> {
         title: const Text('Noticias de la Comunidad'),
         backgroundColor: Colors.indigo[700],
       ),
-      // 6. Mostramos un loader mientras carga, o la lista si ya cargó
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               padding: const EdgeInsets.all(8.0),
               itemCount: _noticias.length,
               itemBuilder: (context, index) {
-                final noticia = _noticias[index]; // <-- Usamos la lista de Firebase
-                // EL WIDGET Card ES EXACTAMENTE EL MISMO DE ANTES. ¡NO HAY QUE CAMBIARLO!
+                final noticia = _noticias[index];
                 return Card(
                   elevation: 4.0,
                   margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
@@ -94,7 +87,7 @@ class _NoticiasScreenState extends State<NoticiasScreen> {
                           width: double.infinity,
                           color: Colors.grey[200],
                           child: Image.network(
-                            noticia.imagen_url,
+                            noticia.imagenUrl,
                             fit: BoxFit.cover,
                             loadingBuilder: (context, child, loadingProgress) {
                               if (loadingProgress == null) return child;
@@ -142,7 +135,7 @@ class _NoticiasScreenState extends State<NoticiasScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(color: Colors.indigo.withOpacity(0.1), borderRadius: const BorderRadius.only(topLeft: Radius.circular(12))),
+                          decoration: BoxDecoration(color: Colors.indigo.withAlpha(26), borderRadius: const BorderRadius.only(topLeft: Radius.circular(12))),
                           child: Chip(label: Text(noticia.tipo, style: const TextStyle(fontWeight: FontWeight.bold)), backgroundColor: Colors.transparent, elevation: 0, visualDensity: VisualDensity.compact, padding: EdgeInsets.zero),
                         ),
                       ],

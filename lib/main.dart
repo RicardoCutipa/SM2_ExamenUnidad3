@@ -403,7 +403,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                     decoration: BoxDecoration(
                       gradient: LinearGradient(colors: content['gradient'], begin: Alignment.topLeft, end: Alignment.bottomRight,),
                       borderRadius: BorderRadius.circular(25),
-                      boxShadow: [BoxShadow(color: content['gradient'][0].withOpacity(0.3), blurRadius: 20, offset: const Offset(0, 10),),],
+                      boxShadow: [BoxShadow(color: (content['gradient'][0] as Color).withAlpha(77), blurRadius: 20, offset: const Offset(0, 10),),],
                     ),
                     child: Icon(content['icon'], size: 50, color: Colors.white,),
                   ),
@@ -422,7 +422,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(_heroContent.length, (index) {
-                    return AnimatedContainer(duration: const Duration(milliseconds: 300), margin: const EdgeInsets.symmetric(horizontal: 4), width: index == _currentContentIndex ? 24 : 8, height: 8, decoration: BoxDecoration(color: index == _currentContentIndex ? Colors.white : Colors.white.withOpacity(0.3), borderRadius: BorderRadius.circular(4),),);
+                    return AnimatedContainer(duration: const Duration(milliseconds: 300), margin: const EdgeInsets.symmetric(horizontal: 4), width: index == _currentContentIndex ? 24 : 8, height: 8, decoration: BoxDecoration(color: index == _currentContentIndex ? Colors.white : Colors.white.withAlpha(77), borderRadius: BorderRadius.circular(4),),);
                   }),
                 ),
               ],
@@ -436,15 +436,15 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   Widget _buildFormSection() {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF0F172A).withOpacity(0.85),
+        color: const Color(0xFF0F172A).withAlpha(217),
         borderRadius: const BorderRadius.only(topLeft: Radius.circular(32), topRight: Radius.circular(32),),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 20, offset: const Offset(0, -5),),],
+        boxShadow: [BoxShadow(color: Colors.black.withAlpha(77), blurRadius: 20, offset: const Offset(0, -5),),],
       ),
       child: Column(
         children: [
           Container(
             margin: const EdgeInsets.all(24),
-            decoration: BoxDecoration(color: const Color(0xFF1E293B).withOpacity(0.8), borderRadius: BorderRadius.circular(16),),
+            decoration: BoxDecoration(color: const Color(0xFF1E293B).withAlpha(204), borderRadius: BorderRadius.circular(16),),
             child: TabBar(
               controller: _tabController,
               indicator: BoxDecoration(gradient: const LinearGradient(colors: [Color(0xFF3B82F6), Color(0xFF1D4ED8)],), borderRadius: BorderRadius.circular(16),),
@@ -568,7 +568,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   Widget _buildGoogleSignInButton() {
     return Container(
       width: double.infinity, height: 56,
-      decoration: BoxDecoration(gradient: const LinearGradient(colors: [Color(0xFF4285F4), Color(0xFF1976D2)],), borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: const Color(0xFF4285F4).withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 4),),],),
+      decoration: BoxDecoration(gradient: const LinearGradient(colors: [Color(0xFF4285F4), Color(0xFF1976D2)],), borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: const Color(0xFF4285F4).withAlpha(77), blurRadius: 8, offset: const Offset(0, 4),),],),
       child: ElevatedButton.icon(
         onPressed: _isGoogleSignIn ? null : _signInWithGoogle,
         icon: _isGoogleSignIn ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white),),) : Image.network('https://developers.google.com/identity/images/g-logo.png', width: 24, height: 24,),
@@ -582,9 +582,9 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
     return TextFormField(
       controller: controller, obscureText: obscureText, keyboardType: keyboardType, style: const TextStyle(color: Colors.white, fontSize: 16),
       decoration: InputDecoration(
-        hintText: hintText, hintStyle: TextStyle(color: Colors.grey.shade500), prefixIcon: Icon(icon, color: Colors.grey.shade500), filled: true, fillColor: const Color(0xFF1E293B).withOpacity(0.7),
+        hintText: hintText, hintStyle: TextStyle(color: Colors.grey.shade500), prefixIcon: Icon(icon, color: Colors.grey.shade500), filled: true, fillColor: const Color(0xFF1E293B).withAlpha(179),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none,),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.grey.shade800.withOpacity(0.5)),),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.grey.shade800.withAlpha(128)),),
         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF3B82F6), width: 2),),
         errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFFDC2626)),),
         contentPadding: const EdgeInsets.all(20),
@@ -596,7 +596,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   Widget _buildPrimaryButton({required String text, required bool isLoading, required VoidCallback onPressed,}) {
     return Container(
       width: double.infinity, height: 56,
-      decoration: BoxDecoration(gradient: const LinearGradient(colors: [Color(0xFF3B82F6), Color(0xFF1D4ED8)],), borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: const Color(0xFF3B82F6).withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 4),),],),
+      decoration: BoxDecoration(gradient: const LinearGradient(colors: [Color(0xFF3B82F6), Color(0xFF1D4ED8)],), borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: const Color(0xFF3B82F6).withAlpha(77), blurRadius: 8, offset: const Offset(0, 4),),],),
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent, shadowColor: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16),),),
@@ -608,9 +608,9 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   Widget _buildDivider() {
     return Row(
       children: [
-        Expanded(child: Divider(color: Colors.grey.shade700.withOpacity(0.5))),
+        Expanded(child: Divider(color: Colors.grey.shade700.withAlpha(128))),
         Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: Text('o continua con correo', style: TextStyle(color: Colors.grey.shade400, fontSize: 14,),),),
-        Expanded(child: Divider(color: Colors.grey.shade700.withOpacity(0.5))),
+        Expanded(child: Divider(color: Colors.grey.shade700.withAlpha(128))),
       ],
     );
   }
@@ -618,7 +618,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   Widget _buildInfoCard() {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(gradient: LinearGradient(colors: [const Color(0xFF3B82F6).withOpacity(0.1), const Color(0xFF1D4ED8).withOpacity(0.1),],), borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFF3B82F6).withOpacity(0.3),),),
+      decoration: BoxDecoration(gradient: LinearGradient(colors: [const Color(0xFF3B82F6).withAlpha(26), const Color(0xFF1D4ED8).withAlpha(26),],), borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFF3B82F6).withAlpha(77),),),
       child: Row(
         children: [
           const Icon(Icons.info_outline, color: Color(0xFF3B82F6), size: 20,), const SizedBox(width: 12),

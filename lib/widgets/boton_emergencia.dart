@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screens/pantallaEmergencia.dart';
+import '../screens/pantalla_emergencia.dart';
 
 class EmergencyButton extends StatelessWidget {
   const EmergencyButton({super.key});
@@ -12,7 +12,7 @@ class EmergencyButton extends StatelessWidget {
     final double dialogHorizontalPadding = (screenSize.width * 0.05).clamp(15.0, 30.0);
     final double dialogVerticalPadding = (screenSize.height * 0.02).clamp(10.0, 20.0);
     final double titleFontSize = isTablet ? 20 : 18;
-    final double contentFontSize = isTablet ? 17 : 16; // Runtime value
+    final double contentFontSize = isTablet ? 17 : 16;
     final double actionButtonFontSize = isTablet ? 15 : 14;
     final double iconSize = isTablet ? 30 : 28;
 
@@ -44,10 +44,9 @@ class EmergencyButton extends StatelessWidget {
         content: ConstrainedBox(
            constraints: BoxConstraints(maxHeight: screenSize.height * 0.4),
            child: SingleChildScrollView(
-            // *** Corrected: Removed 'const' here ***
             child: Text(
               '¿Estás seguro de que deseas abrir el directorio de números de emergencia?',
-              style: TextStyle(fontSize: contentFontSize), // contentFontSize is runtime
+              style: TextStyle(fontSize: contentFontSize),
             ),
           ),
         ),
@@ -91,7 +90,6 @@ class EmergencyButton extends StatelessWidget {
     if (confirm == true && context.mounted) {
       Navigator.push(
         context,
-        // Added const here as EmergencyDirectoryScreen likely can be const
         MaterialPageRoute(builder: (_) => const EmergencyDirectoryScreen()),
       );
     }
@@ -127,7 +125,7 @@ class EmergencyButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.0),
         ),
         elevation: 5.0,
-        shadowColor: Colors.red.withAlpha((0.4 * 255).round()),
+        shadowColor: Colors.red.withAlpha(102),
       ),
     );
   }

@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'dart:io' show Platform;
-// No necesitamos importar './image_viewer_screen.dart' porque estará aquí
 
 class ReportDetailsScreen extends StatefulWidget {
   final String reportId;
@@ -213,7 +212,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> with TickerPr
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: _getRiskColor(riesgo).withOpacity(0.15),
+                color: _getRiskColor(riesgo).withAlpha(38),
                 shape: BoxShape.circle,
               ),
               child: Icon(_getTypeIcon(tipo), size: 30, color: _getRiskColor(riesgo),),
@@ -333,7 +332,7 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> with TickerPr
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20, color: colorTextoSecundario.withOpacity(0.8)),
+          Icon(icon, size: 20, color: colorTextoSecundario.withAlpha(204)),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -368,9 +367,6 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> with TickerPr
   }
 }
 
-// -----------------------------------------------------------------------------
-// Pantalla para Visualizar Imagen en Pantalla Completa
-// -----------------------------------------------------------------------------
 class ImageViewerScreen extends StatelessWidget {
   final String imageUrl;
   final String heroTag;
@@ -389,7 +385,7 @@ class ImageViewerScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
-        leading: IconButton( // Botón para cerrar
+        leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -397,14 +393,14 @@ class ImageViewerScreen extends StatelessWidget {
       body: Center(
         child: Hero(
           tag: heroTag,
-          child: InteractiveViewer( // Permite hacer zoom y pan
+          child: InteractiveViewer(
             panEnabled: true,
             boundaryMargin: const EdgeInsets.all(20),
             minScale: 0.5,
             maxScale: 4,
             child: CachedNetworkImage(
               imageUrl: imageUrl,
-              fit: BoxFit.contain, // Muestra la imagen completa
+              fit: BoxFit.contain,
               placeholder: (context, url) => const Center(child: CircularProgressIndicator(color: Colors.white)),
               errorWidget: (context, url, error) => const Center(child: Icon(Icons.broken_image_outlined, color: Colors.grey, size: 50)),
             ),

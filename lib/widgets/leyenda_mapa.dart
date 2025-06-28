@@ -72,21 +72,21 @@ class _LeyendaMapaState extends State<LeyendaMapa>
         _tituloLeyenda = 'Leyenda Principal';
         _leyendaItems = [
           _buildLeyendaItemParaPrincipal(
-            color: Colors.red.withOpacity(0.6),
+            color: Colors.red.withAlpha(153),
             texto: 'Zona Peligrosa',
             descripcion:
                 'Alto riesgo de incidentes. Se recomienda evitar estas áreas, especialmente durante la noche.',
           ),
           const SizedBox(height: 16),
           _buildLeyendaItemParaPrincipal(
-            color: Colors.orange.withOpacity(0.6),
+            color: Colors.orange.withAlpha(153),
             texto: 'Zona de Riesgo Medio',
             descripcion:
                 'Precaución recomendada. Manténgase alerta y evite mostrar objetos de valor.',
           ),
           const SizedBox(height: 16),
           _buildLeyendaItemParaPrincipal(
-            color: Colors.green.withOpacity(0.6),
+            color: Colors.green.withAlpha(153),
             texto: 'Zona Segura',
             descripcion:
                 'Bajo riesgo de incidentes. Áreas generalmente seguras con buena vigilancia.',
@@ -176,8 +176,8 @@ class _LeyendaMapaState extends State<LeyendaMapa>
           decoration: BoxDecoration(
             color: color,
             shape: BoxShape.circle,
-            border: Border.all(color: color.withOpacity(0.8), width: 2),
-            boxShadow: [BoxShadow(color: color.withOpacity(0.3), blurRadius: 4, spreadRadius: 1)],
+            border: Border.all(color: color.withAlpha(204), width: 2),
+            boxShadow: [BoxShadow(color: color.withAlpha(77), blurRadius: 4, spreadRadius: 1)],
           ),
         ),
         const SizedBox(width: 16),
@@ -217,7 +217,7 @@ class _LeyendaMapaState extends State<LeyendaMapa>
         children: [
           Container(
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(color: color.withOpacity(0.2), shape: BoxShape.circle),
+            decoration: BoxDecoration(color: color.withAlpha(51), shape: BoxShape.circle),
             child: Icon(icon, color: color, size: 24),
           ),
           const SizedBox(width: 12),

@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+import 'dart:async';
 
 const String imgbbApiKey = '9e7f6853238e0d417d67f2c7c3d87282';
 
@@ -68,7 +69,7 @@ class _ReporteFormularioScreenState extends State<ReporteFormularioScreen> {
         if (mounted) setState(() { _isLocationLoading = false; _locationAddress = "Servicios de ubicación desactivados";});
         return;
       }
-      Position position = await Geolocator.getCurrentPosition( desiredAccuracy: LocationAccuracy.high, timeLimit: const Duration(seconds: 15), ).catchError((e) => throw e);
+      Position position = await Geolocator.getCurrentPosition().timeout(const Duration(seconds: 15));
       if (mounted) setState(() { _currentPosition = position; _isLocationLoading = false; _locationAddress = "Ubicación obtenida correctamente"; });
     } catch (e) {
       if (mounted) setState(() { _isLocationLoading = false; _locationAddress = "Error al obtener ubicación"; });
@@ -229,7 +230,7 @@ class _ReporteFormularioScreenState extends State<ReporteFormularioScreen> {
                 final category = _categories[index];
                 return InkWell( onTap: () { if (mounted) setState(() { _selectedCategory = category['id']; }); }, borderRadius: BorderRadius.circular(16),
                   child: Column( mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Container( width: 70, height: 70, decoration: BoxDecoration( color: category['color'].withOpacity(0.1), shape: BoxShape.circle, border: Border.all( color: category['color'], width: 2, ), ),
+                      Container( width: 70, height: 70, decoration: BoxDecoration( color: (category['color'] as Color).withAlpha(26), shape: BoxShape.circle, border: Border.all( color: category['color'], width: 2, ), ),
                         child: Icon( category['icon'], color: category['color'], size: 36, ), ),
                       const SizedBox(height: 8), Text( category['name'], style: const TextStyle( color: Colors.black87, fontWeight: FontWeight.bold, ), textAlign: TextAlign.center, ), ], ), ); }, ), ), ], ), );
   }
@@ -239,7 +240,7 @@ class _ReporteFormularioScreenState extends State<ReporteFormularioScreen> {
 
     return SafeArea( child: Form( key: _formKey, child: ListView( padding: const EdgeInsets.all(16), children: [
             _buildSectionTitle('Tipo de Incidente'),
-            Container( padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), decoration: BoxDecoration( color: selectedCategoryData['color'].withOpacity(0.1), borderRadius: BorderRadius.circular(12), border: Border.all( color: selectedCategoryData['color'].withOpacity(0.3), width: 1, ), ),
+            Container( padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), decoration: BoxDecoration( color: (selectedCategoryData['color'] as Color).withAlpha(26), borderRadius: BorderRadius.circular(12), border: Border.all( color: (selectedCategoryData['color'] as Color).withAlpha(77), width: 1, ), ),
               child: Row( children: [
                   Icon( selectedCategoryData['icon'], color: selectedCategoryData['color'], size: 28, ),
                   const SizedBox(width: 12), Text( selectedCategoryData['name'], style: TextStyle( color: selectedCategoryData['color'], fontWeight: FontWeight.bold, fontSize: 16, ), ),
@@ -248,7 +249,7 @@ class _ReporteFormularioScreenState extends State<ReporteFormularioScreen> {
             
             const SizedBox(height: 24),
             _buildSectionTitle('Ubicación'),
-            Container( padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), decoration: BoxDecoration( color: Colors.blue.withOpacity(0.1), borderRadius: BorderRadius.circular(12), border: Border.all( color: Colors.blue.withOpacity(0.3), width: 1, ), ),
+            Container( padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), decoration: BoxDecoration( color: Colors.blue.withAlpha(26), borderRadius: BorderRadius.circular(12), border: Border.all( color: Colors.blue.withAlpha(77), width: 1, ), ),
               child: Column( crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row( children: [
                       const Icon( Icons.location_on, color: Colors.blue, size: 24, ), const SizedBox(width: 12),
@@ -286,7 +287,7 @@ class _ReporteFormularioScreenState extends State<ReporteFormularioScreen> {
             _buildSectionTitle('Imágenes', trailing: '${_images.length}/5'),
             if (_images.isNotEmpty) Container( height: 120, margin: const EdgeInsets.only(bottom: 16), child: ListView.builder( scrollDirection: Axis.horizontal, itemCount: _images.length, itemBuilder: (context, index) {
                     return Stack( children: [ Container( width: 120, height: 120, margin: const EdgeInsets.only(right: 12), decoration: BoxDecoration( borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.grey[300]!), image: DecorationImage( image: FileImage(File(_images[index].path)), fit: BoxFit.cover, ), ), ),
-                        Positioned( top: 8, right: 20, child: GestureDetector( onTap: () => _removeImage(index), child: Container( padding: const EdgeInsets.all(4), decoration: BoxDecoration( color: Colors.white, shape: BoxShape.circle, boxShadow: [ BoxShadow( color: Colors.black.withOpacity(0.2), blurRadius: 4, offset: const Offset(0, 2), ), ], ),
+                        Positioned( top: 8, right: 20, child: GestureDetector( onTap: () => _removeImage(index), child: Container( padding: const EdgeInsets.all(4), decoration: BoxDecoration( color: Colors.white, shape: BoxShape.circle, boxShadow: [ BoxShadow( color: Colors.black.withAlpha(51), blurRadius: 4, offset: const Offset(0, 2), ), ], ),
                               child: const Icon( Icons.close, color: Colors.red, size: 16, ), ), ), ), ], ); }, ), ),
             InkWell( onTap: _showImageSourceOptions, borderRadius: BorderRadius.circular(12), child: Container( padding: const EdgeInsets.symmetric(vertical: 24), decoration: BoxDecoration( color: Colors.grey[100], borderRadius: BorderRadius.circular(12), border: Border.all( color: Colors.grey[300]!, width: 1, ), ),
                 child: Column( children: [ Icon( Icons.add_photo_alternate, color: Colors.grey[600], size: 48, ), const SizedBox(height: 12),
@@ -298,15 +299,15 @@ class _ReporteFormularioScreenState extends State<ReporteFormularioScreen> {
             Row( children: _riskLevelsData.entries.map((entry) {
                 final String riskName = entry.key; final Map<String, dynamic> riskData = entry.value; final bool isSelected = _riskLevel == riskName;
                 return Expanded( child: GestureDetector( onTap: () { if (mounted) setState(() { _riskLevel = riskName; }); },
-                    child: Container( margin: const EdgeInsets.symmetric(horizontal: 4), padding: const EdgeInsets.symmetric(vertical: 16), decoration: BoxDecoration( color: isSelected ? riskData['color'].withOpacity(0.1) : Colors.grey[100], borderRadius: BorderRadius.circular(12),
+                    child: Container( margin: const EdgeInsets.symmetric(horizontal: 4), padding: const EdgeInsets.symmetric(vertical: 16), decoration: BoxDecoration( color: isSelected ? (riskData['color'] as Color).withAlpha(26) : Colors.grey[100], borderRadius: BorderRadius.circular(12),
                         border: Border.all( color: isSelected ? riskData['color'] : Colors.grey[300]!, width: 2, ),
-                        boxShadow: isSelected ? [ BoxShadow( color: riskData['color'].withOpacity(0.2), blurRadius: 4, offset: const Offset(0, 2), ), ] : null, ),
+                        boxShadow: isSelected ? [ BoxShadow( color: (riskData['color'] as Color).withAlpha(51), blurRadius: 4, offset: const Offset(0, 2), ), ] : null, ),
                       child: Column( children: [ Icon( riskData['icon'], color: riskData['color'], size: isSelected ? 32 : 28, ), const SizedBox(height: 8),
                           Text( riskName, style: TextStyle( color: isSelected ? riskData['color'] : Colors.black87, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, fontSize: 14, ), textAlign: TextAlign.center, ), ], ), ), ), );
               }).toList(), ),
             const SizedBox(height: 32),
 
-            ElevatedButton( onPressed: _isSubmitting ? null : _submitForm, style: ElevatedButton.styleFrom( backgroundColor: Colors.blue, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12), ), disabledBackgroundColor: Colors.blue.withOpacity(0.5), elevation: 4, ),
+            ElevatedButton( onPressed: _isSubmitting ? null : _submitForm, style: ElevatedButton.styleFrom( backgroundColor: Colors.blue, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(12), ), disabledBackgroundColor: Colors.blue.withAlpha(128), elevation: 4, ),
               child: _isSubmitting ? const Row( mainAxisAlignment: MainAxisAlignment.center, children: [ SizedBox( width: 20, height: 20, child: CircularProgressIndicator( color: Colors.white, strokeWidth: 2, ), ), SizedBox(width: 12), Text( 'Enviando...', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, ), ), ], )
                   : const Row( mainAxisAlignment: MainAxisAlignment.center, children: [ Icon(Icons.send, size: 22), SizedBox(width: 12), Text( 'Enviar reporte', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold, ), ), ], ), ),
             const SizedBox(height: 24),

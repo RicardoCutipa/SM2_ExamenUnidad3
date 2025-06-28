@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/servicioEmergencia.dart';
-import '../services/servicioSMS.dart';
+import '../services/servicio_emergencia.dart';
+import '../services/servicio_sms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EmergencyDirectoryScreen extends StatefulWidget {
@@ -214,8 +214,8 @@ class _EmergencyDirectoryScreenState extends State<EmergencyDirectoryScreen> {
                   _saveSmsMessage(message);
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text('Mensaje SMS actualizado correctamente'),
+                      const SnackBar(
+                        content: Text('Mensaje SMS actualizado correctamente'),
                         backgroundColor: Colors.green,
                       ),
                     );
@@ -256,7 +256,7 @@ class _EmergencyDirectoryScreenState extends State<EmergencyDirectoryScreen> {
       ),
       backgroundColor: Colors.grey[100],
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 120.0), // Ajusta este valor según sea necesario
+        padding: const EdgeInsets.only(bottom: 120.0),
         child: ReorderableListView.builder(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
           itemCount: contacts.length,

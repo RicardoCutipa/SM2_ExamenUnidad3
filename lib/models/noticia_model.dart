@@ -7,7 +7,7 @@ class Noticia {
   final String hora;
   final String enlace;
   final String lugar;
-  final String imagen_url;
+  final String imagenUrl;
   final String resumen;
   final String contenido;
   final String tipo;
@@ -20,7 +20,7 @@ class Noticia {
     required this.hora,
     required this.enlace,
     required this.lugar,
-    required this.imagen_url,
+    required this.imagenUrl,
     required this.resumen,
     required this.contenido,
     required this.tipo,
@@ -41,7 +41,7 @@ class Noticia {
       hora: data['hora'] ?? 'Hora no disponible',
       enlace: data['enlace'] ?? '',
       lugar: data['lugar'] ?? 'Ubicación no especificada',
-      imagen_url: data['imagen_url'] ?? '',
+      imagenUrl: data['imagen_url'] ?? '',
       resumen: data['resumen'] ?? 'Sin resumen.',
       contenido: data['contenido'] ?? 'Contenido no disponible.',
       tipo: data['tipo'] ?? 'General',

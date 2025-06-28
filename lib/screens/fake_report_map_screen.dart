@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
-import 'dart:math'; // Para Random
+import 'dart:math';
 
 class FakeReportMapScreen extends StatefulWidget {
   const FakeReportMapScreen({super.key});
@@ -13,12 +13,10 @@ class FakeReportMapScreen extends StatefulWidget {
 }
 
 class _FakeReportMapScreenState extends State<FakeReportMapScreen> {
-  GoogleMapController? _mapController;
   int _reportCounter = 1;
   bool _isSubmitting = false;
   Set<Marker> _markers = {};
 
-  // Definiciones de categorías y niveles de riesgo
   final List<Map<String, dynamic>> _allCategories = [
     {'id': 'accident', 'name': 'Accidente', 'icon': Icons.car_crash, 'color': Colors.red},
     {'id': 'fire', 'name': 'Incendio', 'icon': Icons.local_fire_department, 'color': Colors.orange},
@@ -33,7 +31,7 @@ class _FakeReportMapScreenState extends State<FakeReportMapScreen> {
   final List<String> _riskLevelOptions = ['Bajo', 'Medio', 'Alto'];
 
   static const CameraPosition _kInitialPosition = CameraPosition(
-    target: LatLng(-18.0146, -70.2534), // Coordenadas de Tacna
+    target: LatLng(-18.0146, -70.2534),
     zoom: 13.0,
   );
 
@@ -57,12 +55,10 @@ class _FakeReportMapScreenState extends State<FakeReportMapScreen> {
     try {
       final String reportTitle = "ReporteTest$_reportCounter";
       
-      // Seleccionar tipo aleatorio
       final randomCategory = _allCategories[Random().nextInt(_allCategories.length)];
       final String selectedCategoryType = randomCategory['id'];
       final String selectedCategoryName = randomCategory['name'];
-
-      // Seleccionar nivel de riesgo aleatorio
+      
       final String randomRiskLevel = _riskLevelOptions[Random().nextInt(_riskLevelOptions.length)];
 
       final reporteData = {
@@ -80,7 +76,7 @@ class _FakeReportMapScreenState extends State<FakeReportMapScreen> {
         'fechaCreacionLocal': DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
         'estado': 'Activo',
         'etapa': 'pendiente',
-        'esReportePrueba': true, // Marcador para identificar reportes de prueba
+        'esReportePrueba': true,
       };
 
       await FirebaseFirestore.instance.collection('Reportes').add(reporteData);
@@ -289,9 +285,6 @@ class _FakeReportMapScreenState extends State<FakeReportMapScreen> {
         children: [
           GoogleMap(
             initialCameraPosition: _kInitialPosition,
-            onMapCreated: (GoogleMapController controller) {
-              _mapController = controller;
-            },
             onTap: _handleMapTap,
             markers: _markers,
             zoomControlsEnabled: true,
@@ -300,7 +293,6 @@ class _FakeReportMapScreenState extends State<FakeReportMapScreen> {
             mapType: MapType.normal,
           ),
           
-          // Panel de información superior
           Positioned(
             top: 16,
             left: 16,
@@ -312,7 +304,7 @@ class _FakeReportMapScreenState extends State<FakeReportMapScreen> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withAlpha(26),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),

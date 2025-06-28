@@ -14,9 +14,9 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import '../widgets/barralateral.dart';
 import '../widgets/alternar_boton.dart';
-import '../widgets/botonEmergencia.dart';
+import 'widgets/boton_emergencia.dart';
 import 'screen_principal.dart';
-import '../widgets/LeyendaMapa.dart';
+import 'widgets/leyenda_mapa.dart';
 
 const String googleMapsApiKey = 'AIzaSyBl1LlKDZ_TslvGooMeecMRl6vrXH3cDRs';
 

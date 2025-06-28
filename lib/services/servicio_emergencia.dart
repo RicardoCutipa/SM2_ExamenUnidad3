@@ -1,11 +1,9 @@
 import 'dart:math';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EmergencyService {
-  // Singleton pattern
   static final EmergencyService _instance = EmergencyService._internal();
   factory EmergencyService() => _instance;
   EmergencyService._internal() {
@@ -174,7 +172,9 @@ class EmergencyService {
   }
 
   void reorderEmergencyContact(int oldIndex, int newIndex) {
-    if (oldIndex < newIndex) newIndex -= 1;
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
     final contact = _emergencyContacts.removeAt(oldIndex);
     _emergencyContacts.insert(newIndex, contact);
     _updateBackendOrder();
@@ -182,8 +182,6 @@ class EmergencyService {
   }
 
   void _updateBackendOrder() async {
-    final List orderedIds = _emergencyContacts.map((c) => c['id']).toList();
-    // API para guardar el nuevo orden
   }
 
   Future<void> _saveContacts() async {
