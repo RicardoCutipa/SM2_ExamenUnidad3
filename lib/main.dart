@@ -8,6 +8,7 @@ import 'services/notification_service.dart';
 import 'services/auth_service.dart';
 import 'firebase_options.dart';
 import 'screen_principal.dart';
+import 'utils/validators.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -517,11 +518,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
             _buildDivider(),
             const SizedBox(height: 24),
             _buildTextField(controller: _emailLoginController, hintText: 'tu@email.com', icon: Icons.email_outlined, keyboardType: TextInputType.emailAddress,
-              validator: (value) {
-                if (value == null || value.isEmpty) return 'Por favor, ingresa tu correo';
-                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'Ingresa un correo valido';
-                return null;
-              },
+              validator: Validators.validateEmail,
             ),
             const SizedBox(height: 16),
             _buildTextField(controller: _passwordLoginController, hintText: 'Tu contrasena', icon: Icons.lock_outline, obscureText: true,
@@ -547,26 +544,15 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
         child: Column(
           children: [
             _buildTextField(controller: _nameRegisterController, hintText: 'Tu nombre completo', icon: Icons.person_outline,
-              validator: (value) {
-                if (value == null || value.isEmpty) return 'Por favor, ingresa tu nombre';
-                return null;
-              },
+              validator: Validators.validateName,
             ),
             const SizedBox(height: 16),
             _buildTextField(controller: _emailRegisterController, hintText: 'tu@email.com', icon: Icons.email_outlined, keyboardType: TextInputType.emailAddress,
-              validator: (value) {
-                if (value == null || value.isEmpty) return 'Por favor, ingresa tu correo';
-                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'Ingresa un correo valido';
-                return null;
-              },
+              validator: Validators.validateEmail,
             ),
             const SizedBox(height: 16),
             _buildTextField(controller: _passwordRegisterController, hintText: 'Crea una contrasena segura', icon: Icons.lock_outline, obscureText: true,
-              validator: (value) {
-                if (value == null || value.isEmpty) return 'Por favor, ingresa una contrasena';
-                if (value.length < 6) return 'La contrasena debe tener al menos 6 caracteres';
-                return null;
-              },
+              validator: Validators.validatePassword,
             ),
             const SizedBox(height: 32),
             _buildPrimaryButton(text: 'Crear Cuenta', isLoading: _isRegistering, onPressed: _register,),

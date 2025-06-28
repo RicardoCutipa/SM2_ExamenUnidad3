@@ -1,22 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
-
-int suma(int a, int b) {
-  return a + b;
-}
+import 'package:proyectomovilesii/utils/validators.dart';
 
 void main() {
-  test('Suma de dos números positivos', () {
-    final a = 2;
-    final b = 3;
-    final resultado = suma(a, b);
-    expect(resultado, 5);
+  test('Email válido debe retornar null', () {
+    final resultado = Validators.validateEmail('usuarioprueba@gmail.com');
+    expect(resultado, isNull);
   });
 
-  test('Suma de un número y cero', () {
-    expect(suma(7, 0), 7);
+  test('Contraseña válida debe retornar null', () {
+    final resultado = Validators.validatePassword('123456');
+    expect(resultado, isNull);
   });
 
-  test('Suma de dos números negativos', () {
-    expect(suma(-5, -10), -15);
+  test('Nombre vacío debe retornar un mensaje de error', () {
+    final resultado = Validators.validateName('');
+    expect(resultado, 'Por favor, ingresa tu nombre');
   });
 }
